@@ -10,16 +10,21 @@ class Solution(object):
         :type head: Optional[ListNode]
         :rtype: None Do not return anything, modify head in-place instead.
         """
-        arr=[]
-        while head:
-            arr.append(head)
-            head=head.next
-        l,r=0,len(arr)-1
-        while l<r:
-            arr[l].next=arr[r]
-            l+=1
-            if l==r:
-                break
-            arr[r].next=arr[l]
-            r -=1
-        arr[l].next = None
+        s=f=head
+        while f.next and f.next.next:
+            s=s.next
+            f=f.next.next
+        c,p=s.next,None
+        s.next=None
+        while c:
+            t=c.next
+            c.next=p
+            p=c
+            c=t
+        a,b=head, p
+        while b:
+            t=b.next
+            b.next=a.next
+            a.next=b
+            a=b.next
+            b=t
