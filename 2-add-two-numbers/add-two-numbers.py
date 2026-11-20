@@ -10,18 +10,19 @@ class Solution(object):
         :type l2: Optional[ListNode]
         :rtype: Optional[ListNode]
         """
-        d=ListNode(0)
-        c=d
-        x=0
-        while l1 or l2 or x:
-            a=l1.val if l1 else 0
-            b=l2.val if l2 else 0
-            s=a+b+x
-            x=s//10
-            c.next=ListNode(s%10)
-            c=c.next
-            if l1:
+        dummy=ListNode(0)
+        curr=dummy
+        carry=0
+        while l1 is not None or l2 is not None or carry:
+            sum=carry
+            if l1 is not None:
+                sum +=l1.val
                 l1=l1.next
-            if l2:
+            if l2 is not None:
+                sum +=l2.val
                 l2=l2.next
-        return d.next
+            carry=sum//10
+            digit=sum%10
+            curr.next=ListNode(digit)
+            curr=curr.next
+        return dummy.next
